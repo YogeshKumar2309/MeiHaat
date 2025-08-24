@@ -1,0 +1,221 @@
+MaiHaat-backend/
+├── src/
+│   ├── config/
+│   │   ├── database.js              # MongoDB connection
+│   │   ├── cloudinary.js            # Image upload config
+│   │   ├── jwt.js                   # JWT configuration
+│   │   ├── redis.js                 # Redis config (optional)
+│   │   └── index.js                 # Export all configs
+│   │
+│   ├── models/
+│   │   ├── User.js                  # User schema
+│   │   ├── Restaurant.js            # Restaurant/Shop schema
+│   │   ├── MenuItem.js              # Menu items schema
+│   │   ├── Order.js                 # Order schema
+│   │   ├── Category.js              # Food category schema
+│   │   ├── Review.js                # Reviews schema
+│   │   └── index.js                 # Export all models
+│   │
+│   ├── controllers/
+│   │   ├── auth/
+│   │   │   ├── authController.js    # Login, register, logout
+│   │   │   ├── passwordController.js # Reset password
+│   │   │   └── index.js
+│   │   │
+│   │   ├── user/
+│   │   │   ├── userController.js    # User CRUD
+│   │   │   ├── profileController.js # Profile management
+│   │   │   └── index.js
+│   │   │
+│   │   ├── restaurant/
+│   │   │   ├── restaurantController.js
+│   │   │   ├── menuController.js
+│   │   │   └── index.js
+│   │   │
+│   │   ├── order/
+│   │   │   ├── orderController.js
+│   │   │   ├── customerOrderController.js
+│   │   │   ├── shopOrderController.js
+│   │   │   ├── deliveryOrderController.js
+│   │   │   └── index.js
+│   │   │
+│   │   ├── admin/
+│   │   │   ├── adminController.js
+│   │   │   ├── analyticsController.js
+│   │   │   └── index.js
+│   │   │
+│   │   └── common/
+│   │       ├── uploadController.js  # File uploads
+│   │       └── searchController.js  # Search functionality
+│   │
+│   ├── routes/
+│   │   ├── v1/                      # API versioning
+│   │   │   ├── auth.js              # Auth routes
+│   │   │   ├── users.js             # User routes
+│   │   │   ├── restaurants.js       # Restaurant routes
+│   │   │   ├── orders.js            # Order routes
+│   │   │   ├── admin.js             # Admin routes
+│   │   │   ├── upload.js            # File upload routes
+│   │   │   └── index.js             # Combine all routes
+│   │   │
+│   │   └── index.js                 # Main router
+│   │
+│   ├── middleware/
+│   │   ├── auth/
+│   │   │   ├── authenticate.js      # JWT verification
+│   │   │   ├── authorize.js         # Role-based access
+│   │   │   └── index.js
+│   │   │
+│   │   ├── validation/
+│   │   │   ├── authValidation.js
+│   │   │   ├── userValidation.js
+│   │   │   ├── orderValidation.js
+│   │   │   └── index.js
+│   │   │
+│   │   ├── common/
+│   │   │   ├── errorHandler.js      # Global error handler
+│   │   │   ├── logger.js            # Request logging
+│   │   │   ├── cors.js              # CORS configuration
+│   │   │   ├── rateLimiter.js       # Rate limiting
+│   │   │   ├── upload.js            # File upload middleware
+│   │   │   └── index.js
+│   │   │
+│   │   └── index.js
+│   │
+│   ├── services/
+│   │   ├── auth/
+│   │   │   ├── authService.js       # Auth business logic
+│   │   │   ├── tokenService.js      # JWT token management
+│   │   │   └── index.js
+│   │   │
+│   │   ├── user/
+│   │   │   ├── userService.js
+│   │   │   └── index.js
+│   │   │
+│   │   ├── restaurant/
+│   │   │   ├── restaurantService.js
+│   │   │   ├── menuService.js
+│   │   │   └── index.js
+│   │   │
+│   │   ├── order/
+│   │   │   ├── orderService.js
+│   │   │   ├── paymentService.js
+│   │   │   └── index.js
+│   │   │
+│   │   ├── notification/
+│   │   │   ├── emailService.js      # Email notifications
+│   │   │   ├── smsService.js        # SMS notifications
+│   │   │   ├── pushService.js       # Push notifications
+│   │   │   └── index.js
+│   │   │
+│   │   ├── external/
+│   │   │   ├── paymentGateway.js    # Razorpay/Stripe
+│   │   │   ├── mapsService.js       # Google Maps API
+│   │   │   └── index.js
+│   │   │
+│   │   └── common/
+│   │       ├── uploadService.js     # File upload service
+│   │       ├── cacheService.js      # Redis caching
+│   │       └── index.js
+│   │
+│   ├── utils/
+│   │   ├── constants/
+│   │   │   ├── roles.js             # User roles
+│   │   │   ├── status.js            # Order status
+│   │   │   ├── messages.js          # Response messages
+│   │   │   └── index.js
+│   │   │
+│   │   ├── helpers/
+│   │   │   ├── response.js          # API response formatter
+│   │   │   ├── pagination.js        # Pagination helper
+│   │   │   ├── encryption.js        # Password hashing
+│   │   │   ├── validation.js        # Custom validators
+│   │   │   ├── dateTime.js          # Date utilities
+│   │   │   └── index.js
+│   │   │
+│   │   ├── errors/
+│   │   │   ├── AppError.js          # Custom error class
+│   │   │   ├── ValidationError.js   # Validation errors
+│   │   │   └── index.js
+│   │   │
+│   │   └── database/
+│   │       ├── seeders/             # Database seeders
+│   │       │   ├── adminSeeder.js   # Create super admin
+│   │       │   ├── categorySeeder.js
+│   │       │   └── index.js
+│   │       │
+│   │       └── migrations/          # Database migrations
+│   │           └── index.js
+│   │
+│   ├── validators/
+│   │   ├── schemas/
+│   │   │   ├── authSchema.js        # Joi validation schemas
+│   │   │   ├── userSchema.js
+│   │   │   ├── restaurantSchema.js
+│   │   │   ├── orderSchema.js
+│   │   │   └── index.js
+│   │   │
+│   │   └── index.js
+│   │
+│   ├── jobs/                        # Background jobs
+│   │   ├── emailJobs.js             # Email queue jobs
+│   │   ├── orderJobs.js             # Order processing jobs
+│   │   └── index.js
+│   │
+│   ├── socket/                      # Socket.io configuration
+│   │   ├── socketHandler.js         # Socket event handlers
+│   │   ├── orderEvents.js           # Order real-time updates
+│   │   └── index.js
+│   │
+│   └── app.js                       # Express app configuration
+│
+├── tests/                           # Test files
+│   ├── unit/
+│   │   ├── controllers/
+│   │   ├── services/
+│   │   ├── models/
+│   │   └── utils/
+│   │
+│   ├── integration/
+│   │   ├── auth.test.js
+│   │   ├── orders.test.js
+│   │   └── restaurants.test.js
+│   │
+│   ├── fixtures/                    # Test data
+│   │   ├── users.json
+│   │   └── restaurants.json
+│   │
+│   └── helpers/
+│       ├── testDb.js                # Test database setup
+│       └── testHelpers.js
+│
+├── uploads/                         # Uploaded files
+│   ├── images/
+│   ├── documents/
+│   └── temp/
+│
+├── logs/                           # Application logs
+│   ├── error.log
+│   ├── combined.log
+│   └── access.log
+│
+├── docs/                           # API documentation
+│   ├── api.md
+│   ├── postman/
+│   └── swagger/
+│
+├── scripts/                        # Utility scripts
+│   ├── seed.js                     # Database seeding
+│   ├── migrate.js                  # Database migration
+│   └── backup.js                   # Database backup
+│
+├── .env.example                    # Environment variables template
+├── .env                           # Environment variables
+├── .gitignore
+├── .eslintrc.json                 # ESLint configuration
+├── .prettierrc                    # Prettier configuration
+├── package.json
+├── package-lock.json
+├── server.js                      # Entry point
+├── nodemon.json                   # Nodemon configuration
+└── README.md
