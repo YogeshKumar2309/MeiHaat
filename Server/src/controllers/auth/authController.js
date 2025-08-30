@@ -9,7 +9,6 @@ import OTP from "../../models/Otp.model.js";
 import UserDetail from "../../models/UserDetail.model.js";
 import cloudinary from "../../config/cloudinary.js";
 
-
 export const userResistration = async (req, res) => {
   try {
     const { email, password, roles } = req.body;
@@ -73,7 +72,7 @@ export const userLogin = async (req, res) => {
     const user = await User.findOne({ email });
 
     if (!user) {
-      return sendError(res, "Invalid Credential", 404);
+      return sendError(res, "User not resistered", 404);
     }
 
     const hashedPassword = user.password;
@@ -96,7 +95,7 @@ export const userLogin = async (req, res) => {
 
     return sendSuccess(
       res,
-      "registered successfully",
+      "Login successfully",
       {
         id: user._id,
         email: user.email,
@@ -127,6 +126,20 @@ export const userLogout = async (req, res) => {
     return sendError(res, "No user is logged in", 400, error);
   }
 };
+
+//get me
+export const getMe = async (req, res) => {
+  if (req.session?.user) {
+    return res.json({
+      success: true,
+      isAuthenticated: true,
+      user: req.session.user,
+      token: req.session.token || null, // agar login me token set hai to bhejo
+    });
+  }
+  res.json({ success: false, isAuthenticated: false });
+};
+
 
 //email otp send
 export const sendEmailOtp = async (req, res) => {
@@ -242,7 +255,7 @@ export const addUserDetail = async (req, res) => {
     if (isUserDetail) {
       return sendError(res, "Profile already exists, you can update it");
     }
-    
+
     const newUserDetail = new UserDetail({
       userId: isUser._id,
       fullName,
@@ -287,7 +300,7 @@ export const updateUserDetail = async (req, res) => {
     console.log("error from updateUserDetail", error);
     return sendError(res, "Internal server error", 500, error);
   }
-}
+};
 
 //add profile
 export const addUserProfile = async (req, res) => {
@@ -321,29 +334,26 @@ export const addUserProfile = async (req, res) => {
     }
 
     return sendSuccess(res, "Profile picture updated", user);
-    
   } catch (error) {
     console.log(error);
     return sendError(res, "Internal server error", 500, error);
   }
-}
+};
 
-//updtate profile                                                       
+//updtate profile
 export const updateUserProfile = async (req, res) => {
   try {
-    
   } catch (error) {
     console.log(error);
     return sendError(res, "Internal server error", 500, error);
   }
-}
+};
 
 //get profile
 export const getUserProfile = async (req, res) => {
   try {
-
   } catch (error) {
     console.log(error);
     return sendError(res, "Internal server error", 500, error);
   }
-}
+};

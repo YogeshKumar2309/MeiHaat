@@ -2,18 +2,19 @@
 import express from "express";
 import { validate } from "../../middleware/auth/validator.js";
 import { loginSchema, registerSchema } from "../../validators/schemas/authSchema.js";
-import { addUserDetail, addUserProfile, getUserDetail, sendEmailOtp, updateUserDetail, userLogin, userLogout, userResistration, verifyEmailOtp } from "../../controllers/auth/authController.js";
+import { addUserDetail, addUserProfile, getMe, getUserDetail, sendEmailOtp, updateUserDetail, userLogin, userLogout, userResistration, verifyEmailOtp } from "../../controllers/auth/authController.js";
 import {verifySession}  from "../../middleware/auth/authenticate.js" ;
 import {upload }from "../../middleware/common/upload.js";
 
 const authRouter = express.Router();
 
-authRouter.post('/signup',validate(registerSchema),  userResistration);
+authRouter.post('/register',validate(registerSchema),  userResistration);
 authRouter.post('/login', validate(loginSchema), userLogin);
 authRouter.post('/logout',userLogout);
 
 // only logged-in users can access
 authRouter.use(verifySession);
+authRouter.get("/me", getMe);
 authRouter.get('/emailVarification/sendOtp',sendEmailOtp);
 authRouter.post('/emailVarification/verifyOtp',verifyEmailOtp);
 
