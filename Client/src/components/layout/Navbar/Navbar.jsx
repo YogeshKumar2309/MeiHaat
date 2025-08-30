@@ -1,8 +1,22 @@
 import { NavLink } from "react-router-dom";
 import routes from "../../../utils/constants/routes.js";
 import { useState } from "react";
+import { useGetMeQuery, useLogoutMutation } from "../../../api/rtk/authApi.js";
+import { useDispatch, useSelector } from "react-redux";
+import toast from "react-hot-toast";
+import { logoutUser } from "../../../store/slices/authSlice.js";
 
 const Navbar = () => {
+  const dispatch = useDispatch();
+  const [logout ] = useLogoutMutation();
+
+  const { data, isLoading, isError } = useGetMeQuery();
+  const [location, setLocation] = useState("");
+
+   // Redux state से authentication read करें
+  const { user, isLoggedIn } = useSelector((state) => state.auth);
+
+
   //only PubliclayoutComponent
   const publicRoutes =
     routes.find((r) => r.element === "PublicLayout")?.children || [];
@@ -16,7 +30,22 @@ const Navbar = () => {
       !route.path.includes(":") // dynamic params (restaurant/:id)  ignore
   );
 
-  const [location, setLocation] = useState("");
+  const handleLogout = async () => {
+    try {
+      await logout().unwrap();//backend call
+      dispatch(logoutUser());//redux state clear
+      toast.success("Logged out successfully");
+    } catch (error) {
+      toast.error("Logout failed. Please try again.");
+    }
+  }
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+  if (isError) {
+    return <div>Error loading user data</div>;
+  }
 
   const handleLocationChange = (e) => {
     setLocation(e.target.value);
@@ -76,7 +105,7 @@ const Navbar = () => {
           </ul>
         </div>
 
-        {false ? (
+        {isLoggedIn ? (
           <div className="flex items-center gap-2 pr-10">
             {/* Cart Dropdown */}
             <div className="dropdown dropdown-end">
@@ -146,7 +175,9 @@ const Navbar = () => {
                   <a>Settings</a>
                 </li>
                 <li>
-                  <a>Logout</a>
+                  <button
+                    onClick={handleLogout}
+                  >Logout</button>
                 </li>
               </ul>
             </div>

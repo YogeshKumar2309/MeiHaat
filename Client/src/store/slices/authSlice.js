@@ -1,70 +1,33 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { loginApi, singupApi } from "../../api/services/authService";
-import {
-  handleLoginPending,
-  handleLoginFulfilled,
-  handleLoginRejected,
-  handleSignupPending,
-  handleSignupFulfilled,
-  handleSignupRejected,
-} from './authReducers';
-
-
-//Thunks
-export const loginUser = createAsyncThunk(
-  'auth/loginUser',
-  async ({ email , password , role}, thunlAPI) => {
-    try {
-      return await loginApi(email,password,role);
-    } catch (error) {
-      return thunlAPI.rejectWithValue(error.response?.data || { message: 'Login failed'});
-    }
-  }
-);
-
-export const signupUser = createAsyncThunk(
-  'auth/signupUser',
-  async ({ email , password , role}, thunlAPI) => {
-    try {
-      return await singupApi(email,password,role);
-    } catch (error) {
-      return thunlAPI.rejectWithValue(error.response?.data || { message: 'Login failed'});
-    }
-  }
-);
-
+import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  isLoggedIn: !!localStorage.getItem('authToken'),
-  user: JSON.parse(localStorage.getItem('authUser')) || null,
-  token: localStorage.getItem('authToken') || null,
-  loading: false,
-  error: null,
+  user: null,
+  token: null,
+  isLoggedIn: false,
 };
 
 const authSlice = createSlice({
-  name: 'auth',
+  name: "auth",
   initialState,
   reducers: {
-    logout: (state) => {
-      state.isLoggedIn = false;
+    setUser: (state, action) => {
+      state.user = action.payload.user;
+      state.token = action.payload.token;
+      state.isLoggedIn = true;
+    },
+
+    loginUser: (state, action) => {
+      state.user = action.payload.user;
+      state.token = action.payload.token;
+      state.isLoggedIn = true;
+    },
+    logoutUser: (state) => {
       state.user = null;
       state.token = null;
-      state.error = null;
-      localStorage.removeItem('authToken');
-      localStorage.removeItem('authUser');
+      state.isLoggedIn = false;
     },
-  },
-  extraReducers: (builder) => {
-    builder
-      .addCase(loginUser.pending, handleLoginPending)
-      .addCase(loginUser.fulfilled, handleLoginFulfilled)
-      .addCase(loginUser.rejected, handleLoginRejected)
-      .addCase(signupUser.pending, handleSignupPending)
-      .addCase(signupUser.fulfilled, handleSignupFulfilled)
-      .addCase(signupUser.rejected, handleSignupRejected);
   },
 });
 
-export const { logout } = authSlice.actions;
+export const { setUser , loginUser, logoutUser} = authSlice.actions;
 export default authSlice.reducer;

@@ -1,0 +1,61 @@
+src/
+├── store/
+│   ├── index.js              <-- Configure store, apply middleware
+│   ├── rootReducer.js        <-- Combine all slices
+│   │
+│   ├── slices/
+│   │   ├── authSlice.js      <-- Auth state, reducers, asyncThunk (signup/login/logout)
+│   │   ├── cartSlice.js      <-- Cart state, reducers, asyncThunk (add/remove items)
+│   │   ├── orderSlice.js     <-- Orders state, reducers, asyncThunk (place/fetch orders)
+│   │   ├── userSlice.js      <-- User profile state, update/fetch
+│   │   ├── restaurantSlice.js
+│   │   └── deliverySlice.js
+│   │
+│   ├── selectors/
+│   │   ├── authSelectors.js  <-- selectUser, selectIsLoggedIn, selectAuthError
+│   │   ├── cartSelectors.js
+│   │   └── orderSelectors.js
+│   │
+│   └── middleware/
+│       └── authMiddleware.js <-- Optional, check token, redirect, logging
+│
+├── api/
+│   ├── config/
+│   │   ├── axios.js          <-- Axios instance with baseURL & interceptors
+│   │   └── endpoints.js      <-- API endpoints constants
+│   │
+│   ├── services/
+│   │   ├── authService.js    <-- signupUser, loginUser, logoutUser API calls
+│   │   ├── userService.js    <-- fetch/update user profile API calls
+│   │   ├── orderService.js
+│   │   ├── restaurantService.js
+│   │   └── deliveryService.js
+│
+├── hooks/
+│   ├── auth/
+│   │   ├── useAuth.js        <-- Return {user, loading, error, login, signup, logout}
+│   │   ├── useLogin.js       <-- Encapsulate login dispatch & selector
+│   │   └── useRegister.js    <-- Encapsulate signup dispatch & selector
+│   │
+│   ├── customer/
+│   │   ├── useCart.js        <-- Access cart state & dispatch actions
+│   │   └── useOrders.js
+│
+├── components/
+│   ├── features/
+│   │   ├── auth/
+│   │   │   ├── LoginForm/    <-- useLogin hook
+│   │   │   └── RegisterForm/ <-- useRegister hook
+│   │   │
+│   │   └── customer/
+│   │       ├── Cart/         <-- useCart hook
+│   │       └── OrderHistory/ <-- useOrders hook
+│
+├── pages/
+│   ├── auth/
+│   │   ├── LoginPage/        <-- Render LoginForm
+│   │   └── RegisterPage/     <-- Render RegisterForm
+│   │
+│   └── customer/
+│       ├── HomePage/
+│       └── CheckoutPage/
